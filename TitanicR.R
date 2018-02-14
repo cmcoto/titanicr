@@ -1,5 +1,7 @@
+#libraries needed
 library(dplyr)
 library(ggplot2)
+library(mice)
 
 #read datafiles
 
@@ -19,6 +21,20 @@ fsurvived <- as.factor(train$Survived)
 fpclass <- as.factor(train$Pclass)
 
 #find NA in Variables, apparently in AGE we have 177, and appears to be the variable most affected...
+# What percent does the NA's account for the dataset? Is it 5% of Variable?
+
+
+#function for finding % of Na per variable...found on:
+#https://datascienceplus.com/imputing-missing-data-with-r-mice-package/
+
+pMiss <- function(x){sum(is.na(x))/length(x)*100}
+apply(train,2,pMiss)
+apply(train,1,pMiss)
+
+#Use mice to find missing data with md function
+md.pattern(train)
+
+
 
 #Should I change the NA in Age with the MEAN of Age? Or should I check per case, if NAME or Title implies age?
 #I get the index of the NA
@@ -49,3 +65,4 @@ plot(cfage, fsurvived, main = "Titanic Survival According To Life Cycle Stages",
 
 
 #MODELS
+fit1 = glm(train$Survived~train$Age, data= train)
