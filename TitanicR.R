@@ -16,12 +16,21 @@ fpclass <- as.factor(train$Pclass)
 #Should I change the NA in Age with the MEAN of Age? Or should I check per case, if NAME or Title implies age?
 #I get the index of the NA
 naage <- which(is.na(train$Age))
+
 #get the names of naage to imply age?
 train$Name[naage]
+
 #Master in name
 na_in_name <- which(grepl("Master", train$Name[naage]))
 na_in_name
 
+#create a function to change NA in na_in_name to apropiate âge
+apropiate_age <- function(x){
+  if (na_in_name){
+    naage 
+  }
+}
+ 
 #factor Age according to Life Cycle Stages
 fage <- as.factor(train$Age) 
 cfage <- cut(train$Age, c(0,12, 20, 40, 60, Inf))
