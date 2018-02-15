@@ -47,7 +47,18 @@ train$Name[naage]
 na_in_name <- which(grepl("Master", train$Name[naage]))
 na_in_name
 
-#create a function to change NA in na_in_name to apropiate âge
+#USE DPLYR to select variables to be used with MICE
+dtrain <- select(train, Survived, Pclass, Age, SibSp, Parch, Fare)
+dtrain
+
+#USE MICE WITH VARIABLES 
+imp <- mice(dtrain, meth='pmm',seed=500)
+summary(imp)
+
+#check imputed variables
+imp$imp$Age
+#complete the Data
+imp <- complete(imp,1)
 
  
 #factor Age according to Life Cycle Stages
@@ -64,5 +75,7 @@ plot(train$Sex, fsurvived, main = "Titanic Survival According To Gender", xlab =
 plot(cfage, fsurvived, main = "Titanic Survival According To Life Cycle Stages", xlab = "Life Stage", ylab ="Survival")
 
 
-#MODELS
-fit1 = glm(train$Survived~train$Age, data= train)
+
+
+
+
