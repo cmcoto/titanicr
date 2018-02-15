@@ -51,7 +51,7 @@ dall <- select(all, Survived, Pclass, Age, SibSp, Parch, Fare)
 dall
 
 #USE MICE WITH VARIABLES 
-imp <- mice(dall, meth='pmm',seed=500)
+imp <- mice(dall, exclude = "Survived", meth='pmm',seed=500)
 summary(imp)
 
 #check imputed variables
@@ -85,7 +85,7 @@ plot(cfimp_age, fsurvived, main = "Titanic Survival According To Life Cycle Stag
 #MODELS
 #logistic regression
 
-# Logistic regression
+#Logistic regression
 #glm.fit=glm(train$Survived~imp$Age+imp$Pclass+imp$SibSp+imp$Parch+imp$Fare,
  #           data=train,family=binomial)
 #summary(glm.fit)
