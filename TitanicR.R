@@ -14,6 +14,9 @@ str(train)
 #Summary of the Data
 summary(train)
 
+#Unite all the Data
+test$Survived <- NA
+all <- rbind(train, test)
 
 #factorize some variables
 
@@ -67,6 +70,9 @@ cfage <- cut(train$Age, c(0,12, 20, 40, 60, Inf))
 #factor fage levels
 #levels(fage) <- c("Childhood" = 0 <= 12, "Adolescense" = 13 <= 20, "Early Adult" = 21 <= 40, "Midlife" = 41 <= 60 "Mature" = 60 > 100)
 
+#factor Age without the NA's imputed by mice
+fimp_age <- as.factor(imp$Age) 
+cfimp_age <- cut(imp$Age, c(0,12, 20, 40, 60, Inf))
 
 #PLOTS
 
@@ -75,7 +81,15 @@ plot(train$Sex, fsurvived, main = "Titanic Survival According To Gender", xlab =
 plot(cfage, fsurvived, main = "Titanic Survival According To Life Cycle Stages", xlab = "Life Stage", ylab ="Survival")
 
 
+#MODELS
+#logistic regression
 
-
+# Logistic regression
+#glm.fit=glm(train$Survived~imp$Age+imp$Pclass+imp$SibSp+imp$Parch+imp$Fare,
+ #           data=train,family=binomial)
+#summary(glm.fit)
+#Prediction
+#glm.probs=predict(glm.fit,newdata=test,type="response")
+#glm.pred=ifelse(glm.probs >0.5,"Lived","Died")
 
 
